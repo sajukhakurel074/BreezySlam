@@ -51,10 +51,10 @@ javatest: Log2PGM.class
 	$(VIEWER) $(DATASET).pgm
 
 log2pgm: log2pgm.o 
-	g++ -O3 -o log2pgm log2pgm.o -L$(LIBDIR) -lbreezyslam
+	g++ -g3 -o log2pgm log2pgm.o -L$(LIBDIR) -lbreezyslam
 
 log2pgm.o: log2pgm.cpp 
-	g++ -O3 -c -I ../cpp log2pgm.cpp
+	g++ -g3 -c -I ../cpp log2pgm.cpp
 
 Log2PGM.class: Log2PGM.java
 	javac -classpath ../java Log2PGM.java
