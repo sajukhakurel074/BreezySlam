@@ -22,7 +22,7 @@ LIBDIR = /usr/local/lib
 ifeq ("$(shell uname)","Darwin")
   LIBEXT = dylib
 else ifeq ("$(shell uname)","Linux")
-  CFLAGS = -fPIC
+  CFLAGS = -fPIC -g3
   LIBEXT = so
 else
   LIBEXT = dll
@@ -46,34 +46,34 @@ test: breezytest
 
 libbreezyslam.$(LIBEXT): algorithms.o  Scan.o Map.o WheeledRobot.o \
                          coreslam.o coreslam_$(ARCH).o random.o ziggurat.o
-	g++ -O3 -shared algorithms.o Scan.o Map.o WheeledRobot.o \
+	g++ -g3 -shared algorithms.o Scan.o Map.o WheeledRobot.o \
                         coreslam.o coreslam_$(ARCH).o random.o ziggurat.o \
           -o libbreezyslam.$(LIBEXT) -lm
 
 algorithms.o: algorithms.cpp algorithms.hpp Laser.hpp Position.hpp Map.hpp Scan.hpp PoseChange.hpp \
                WheeledRobot.hpp ../c/coreslam.h 
-	g++ -O3 -I../c -c -Wall $(CFLAGS) algorithms.cpp
+	g++ -I../c -c -Wall $(CFLAGS) algorithms.cpp
 
 Scan.o: Scan.cpp Scan.hpp PoseChange.hpp Laser.hpp ../c/coreslam.h
-	g++ -O3 -I../c -c -Wall $(CFLAGS) Scan.cpp
+	g++ -I../c -c -Wall $(CFLAGS) Scan.cpp
 
 Map.o: Map.cpp Map.hpp Position.hpp Scan.hpp ../c/coreslam.h
-	g++ -O3 -I../c -c -Wall $(CFLAGS) Map.cpp
+	g++ -I../c -c -Wall $(CFLAGS) Map.cpp
 
 WheeledRobot.o: WheeledRobot.cpp WheeledRobot.hpp 
-	g++ -O3 -I../c -c -Wall $(CFLAGS) WheeledRobot.cpp
+	g++ -I../c -c -Wall $(CFLAGS) WheeledRobot.cpp
 
 coreslam.o: ../c/coreslam.c ../c/coreslam.h
-	gcc -O3 -c -Wall $(CFLAGS) ../c/coreslam.c
+	gcc  -c -Wall $(CFLAGS) ../c/coreslam.c
 
 coreslam_$(ARCH).o: ../c/coreslam_$(ARCH).c ../c/coreslam.h
-	gcc -O3 -c -Wall $(CFLAGS) $(SIMD_FLAGS) ../c/coreslam_$(ARCH).c
+	gcc -c -Wall $(CFLAGS) $(SIMD_FLAGS) ../c/coreslam_$(ARCH).c
 
 random.o: ../c/random.c
-	gcc -O3 -c -Wall $(CFLAGS) ../c/random.c
+	gcc -c -Wall $(CFLAGS) ../c/random.c
 	
 ziggurat.o: ../c/ziggurat.c
-	gcc -O3 -c -Wall $(CFLAGS) ../c/ziggurat.c
+	gcc -c -Wall $(CFLAGS) ../c/ziggurat.c
 	
 install: libbreezyslam.$(LIBEXT)
 	cp libbreezyslam.$(LIBEXT) $(LIBDIR)
