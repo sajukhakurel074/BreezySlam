@@ -1,0 +1,70 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "process",
+			"label": "Build Library",
+			"command": "make",
+			"args": [
+				"install"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/cpp"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "compiler: g++.exe"
+		},
+		{
+			"type": "process",
+			"label": "Build example",
+			"command": "make",
+			"args": [
+				"cpptest"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/examples"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "compiler: g++.exe"
+        },
+        {
+			"type": "process",
+			"label": "Delete example",
+			"command": "make",
+			"args": [
+				"clean"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/examples"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "Delete log2pgm *.pyc *.pgm *.o *.class"
+        },
+        {
+			"type": "process",
+			"label": "Delete library",
+			"command": "make",
+			"args": [
+				"clean"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/cpp"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "Delete libbreezyslam.so *.o Documentation "
+		},
+    ]
+    
+}

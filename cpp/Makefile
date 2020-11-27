@@ -76,7 +76,7 @@ ziggurat.o: ../c/ziggurat.c
 	gcc -c -Wall $(CFLAGS) ../c/ziggurat.c
 	
 install: libbreezyslam.$(LIBEXT)
-	cp libbreezyslam.$(LIBEXT) $(LIBDIR)
+	sudo cp libbreezyslam.$(LIBEXT) $(LIBDIR)
 	
 doc:
 	doxygen
