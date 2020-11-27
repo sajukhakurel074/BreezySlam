@@ -2,6 +2,7 @@ java/edu/wlu/cs/levy/breezyslam/algorithms/RMHCSLAM.h
 java/edu/wlu/cs/levy/breezyslam/components/Map.h
 java/edu/wlu/cs/levy/breezyslam/components/Scan.h
 examples/__pycache__
+examples/testOut
 examples/*.pyc
 examples/*.pgm
 examples/*.png
@@ -14,4 +15,5 @@ python/build
 *.o
 *.so
 *.swp
+*.pgm
 

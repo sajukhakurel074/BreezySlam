@@ -62,6 +62,8 @@ using namespace std;
 #include "algorithms.hpp"
 
 
+#define CUMULATIVE_MAPS 1
+
 // Methods to load all data from file ------------------------------------------
 // Each line in the file has the format:
 //
@@ -299,6 +301,46 @@ int mm2pix(double mm)
     return (int)(mm / (MAP_SIZE_METERS * 1000. / MAP_SIZE_PIXELS));  
 }
 
+int printMap(SinglePositionSLAM * slam, const char * filename, unsigned char * mapbytes, const vector<double *> & trajectory )
+{
+    // Get final map
+    slam->getmap(mapbytes);
+
+    // Put trajectory into map as black pixels
+    for (int k=0; k<(int)trajectory.size(); ++k)
+    {        
+        double * v = trajectory[k];
+                        
+        int x = mm2pix(v[0]);
+        int y = mm2pix(v[1]);
+                        
+        mapbytes[coords2index(x, y)] = 0;
+    }
+            
+    // Save map and trajectory as PGM file    
+    
+    printf("\nSaving map to file %s\n", filename);
+    
+    FILE * output = fopen(filename, "wt");
+
+    if(!output) return 0;
+    
+    fprintf(output, "P2\n%d %d 255\n", MAP_SIZE_PIXELS, MAP_SIZE_PIXELS);
+    
+    for (int y=0; y<MAP_SIZE_PIXELS; y++)
+    {
+        for (int x=0; x<MAP_SIZE_PIXELS; x++)
+        {
+            fprintf(output, "%d ", mapbytes[coords2index(x, y)]);
+        }
+        fprintf(output, "\n");
+    }
+    
+    printf("\n");
+
+    return 1;
+}
+
 int main( int argc, const char** argv )
 {    
     // Bozo filter for input args
@@ -361,7 +403,7 @@ int main( int argc, const char** argv )
         {
             slam->update(lidar);  
         }
-        
+
         Position position = slam->getpos();
 
         // Add new coordinates to trajectory
@@ -374,6 +416,12 @@ int main( int argc, const char** argv )
         progbar->updateAmount(scanno);
         printf("\r%s", progbar->str());
         fflush(stdout);
+        
+        #if CUMULATIVE_MAPS
+        char testfile[100];
+        sprintf(testfile, "./testOut/test%d.pgm", scanno);
+        printMap(slam, testfile, mapbytes, trajectory);
+        #endif
     }
 
     // Report speed
