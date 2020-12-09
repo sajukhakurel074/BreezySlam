@@ -40,7 +40,7 @@ Change log:
 static const int MAP_SIZE_PIXELS        = 800;
 static const double MAP_SIZE_METERS     =  32;
 
-static const int SCAN_SIZE 		        = 682;
+static const int SCAN_SIZE 		        = 360;
 
 // Arbitrary maximum length of line in input logfile
 #define MAXLINE 10000
@@ -72,6 +72,12 @@ using namespace std;
 //  0          ... 2   3  ... 24 ... 
 //  
 //where Q1, Q2 are odometry values
+
+class LaserScan: public Laser
+{
+    public:
+             LaserScan(int detection_margin, int offset): Laser(360, 5, 360, 3500, detection_margin, offset){}
+};
 
 static void skiptok(char ** cpp)
 {
@@ -116,12 +122,6 @@ static void load_data(
         odometry[2] = nextint(&cp);
         
         odometries.push_back(odometry);
-        
-        // Skip unused fields
-        for (int k=0; k<20; ++k)
-        {
-            skiptok(&cp);
-        }
         
         int * scanvals = new int [SCAN_SIZE];
         
@@ -370,7 +370,7 @@ int main( int argc, const char** argv )
     unsigned char * mapbytes = new unsigned char[MAP_SIZE_PIXELS * MAP_SIZE_PIXELS];
         
     // Create SLAM object
-    MinesURG04LX laser;
+    LaserScan laser (0, 0);
     SinglePositionSLAM * slam = random_seed ?
     (SinglePositionSLAM*)new RMHC_SLAM(laser, MAP_SIZE_PIXELS, MAP_SIZE_METERS, random_seed) :
     (SinglePositionSLAM*)new Deterministic_SLAM(laser, MAP_SIZE_PIXELS, MAP_SIZE_METERS);
