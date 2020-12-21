@@ -39,6 +39,14 @@ Map::Map(int size_pixels, double size_meters)
     map_init(this->map, size_pixels, size_meters);
 }
 
+Map::Map(const Map& map123)
+{  
+    this->map = new map_t;
+    memcpy(this->map, map123.map, sizeof(map_t));
+    this->map->pixels = (pixel_t *)malloc(this->map->size_pixels * this->map->size_pixels * sizeof(pixel_t));
+    memcpy(this->map->pixels, map123.map->pixels, sizeof(this->map->size_pixels * this->map->size_pixels* sizeof(pixel_t)));
+}
+
 Map::~Map(void)
 {
     map_free(this->map);

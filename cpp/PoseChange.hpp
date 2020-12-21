@@ -17,6 +17,8 @@
 * You should have received a copy of the GNU Lesser General Public License 
 * along with this code.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __POSECHANGE_HPP__
+#define __POSECHANGE_HPP__
 
 #include <stdio.h>
 #include <math.h>
@@ -91,3 +93,5 @@ double dxy_mm;
 double dtheta_degrees;
 double dt_seconds;
 };
+
+#endif

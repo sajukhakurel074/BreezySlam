@@ -60,7 +60,7 @@ using namespace std;
 #include "WheeledRobot.hpp"
 #include "PoseChange.hpp"
 #include "algorithms.hpp"
-
+#include "OurSlam.hpp"
 
 #define CUMULATIVE_MAPS 1
 
@@ -320,7 +320,7 @@ int printMap(SinglePositionSLAM * slam, const char * filename, unsigned char * m
     // Save map and trajectory as PGM file    
     
     printf("\nSaving map to file %s\n", filename);
-    
+
     FILE * output = fopen(filename, "wt");
 
     if(!output) return 0;
@@ -341,8 +341,13 @@ int printMap(SinglePositionSLAM * slam, const char * filename, unsigned char * m
     return 1;
 }
 
+
 int main( int argc, const char** argv )
 {    
+    LaserScan laser(0, 0); 
+    OurSlam slam (laser, 800, 8);
+
+#if 0
     // Bozo filter for input args
     if (argc < 3)
     {
@@ -486,6 +491,7 @@ int main( int argc, const char** argv )
     delete mapbytes;
     fclose(output);
 
-    
+#endif    
+
     return 0;
 }

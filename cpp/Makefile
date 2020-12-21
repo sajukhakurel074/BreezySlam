@@ -52,16 +52,16 @@ libbreezyslam.$(LIBEXT): algorithms.o  Scan.o Map.o WheeledRobot.o \
 
 algorithms.o: algorithms.cpp algorithms.hpp Laser.hpp Position.hpp Map.hpp Scan.hpp PoseChange.hpp \
                WheeledRobot.hpp ../c/coreslam.h 
-	g++ -I../c -c -Wall $(CFLAGS) algorithms.cpp
+	g++ -I./ -I../c -c -Wall $(CFLAGS) algorithms.cpp
 
 Scan.o: Scan.cpp Scan.hpp PoseChange.hpp Laser.hpp ../c/coreslam.h
-	g++ -I../c -c -Wall $(CFLAGS) Scan.cpp
+	g++ -I./ -I../c -c -Wall $(CFLAGS) Scan.cpp
 
 Map.o: Map.cpp Map.hpp Position.hpp Scan.hpp ../c/coreslam.h
-	g++ -I../c -c -Wall $(CFLAGS) Map.cpp
+	g++ -I./ -I../c -c -Wall $(CFLAGS) Map.cpp
 
 WheeledRobot.o: WheeledRobot.cpp WheeledRobot.hpp 
-	g++ -I../c -c -Wall $(CFLAGS) WheeledRobot.cpp
+	g++ -I./ -I../c -c -Wall $(CFLAGS) WheeledRobot.cpp
 
 coreslam.o: ../c/coreslam.c ../c/coreslam.h
 	gcc  -c -Wall $(CFLAGS) ../c/coreslam.c

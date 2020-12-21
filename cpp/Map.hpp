@@ -17,10 +17,13 @@
 * You should have received a copy of the GNU Lesser General Public License 
 * along with this code.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __MAP_H__
+#define __MAP_H__
 
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <iostream>
 using namespace std; 
@@ -84,5 +87,10 @@ friend ostream& operator<< (ostream & out, Map & map);
 private:
     
     struct map_t * map;
+
+public:
+    Map(const Map& map123);
+
 };
 
+#endif 

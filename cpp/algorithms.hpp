@@ -17,9 +17,13 @@
 * You should have received a copy of the GNU Lesser General Public License 
 * along with this code.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef __ALGORITHMS_HPP__
+#define __ALGORITHMS_HPP__
 
 #include <stdio.h>
 #include <math.h>
+#include <Position.hpp>
+#include <PoseChange.hpp>
 
 #include <iostream>
 #include <vector>
@@ -302,3 +306,5 @@ protected:
     Position getNewPosition(Position & start_position) ;
      
 }; // Deterministic_SLAM 
+
+#endif
