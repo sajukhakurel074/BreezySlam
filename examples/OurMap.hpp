@@ -7,10 +7,10 @@
 #include <math.h>
 #include <time.h>
 
+#include "coreslam.h"
 #include "Position.hpp"
 #include "algorithms.hpp"
 #include "Map.hpp"
-#include "coreslam.h"
 #include "Scan.hpp"
 
 class OurMap {
@@ -23,7 +23,7 @@ class OurMap {
 
 
   public:
-OurMap( int size_pixels, int map_size_meters, int num_particles, bool init_pixels );
+    OurMap( int size_pixels, int map_size_meters, int num_particles, bool init_pixels );
 
   void update(
     int map_handle,

@@ -92,7 +92,7 @@ update(
 
 friend ostream& operator<< (ostream & out, Scan & scan);
 
-private:
+public:
     
     struct scan_t * scan;
     

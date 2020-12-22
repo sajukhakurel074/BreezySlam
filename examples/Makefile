@@ -52,14 +52,17 @@ javatest: Log2PGM.class
 	$(DATASET) $(USE_ODOMETRY) $(RANDOM_SEED)
 	$(VIEWER) $(DATASET).pgm
 
-log2pgm: log2pgm.o OurSlam.o
-	g++ -g3 -o log2pgm log2pgm.o OurSlam.o -L$(LIBDIR) -lbreezyslam
+log2pgm: log2pgm.o OurSlam.o OurMap.o
+	g++ -g3 -o log2pgm log2pgm.o OurSlam.o OurMap.o -L$(LIBDIR) -lbreezyslam
 
 log2pgm.o: log2pgm.cpp 
-	g++ -g3 -c -I ../cpp log2pgm.cpp
+	g++ -g3 -c -I ../cpp -I ../c log2pgm.cpp 
 
 OurSlam.o: OurSlam.cpp 
 	g++ -g3 -c -I ../cpp -I ../c OurSlam.cpp
+
+OurMap.o: OurMap.cpp 
+	g++ -g3 -c -I ../cpp -I ../c OurMap.cpp
 
 Log2PGM.class: Log2PGM.java
 	javac -classpath ../java Log2PGM.java

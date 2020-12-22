@@ -1,4 +1,6 @@
 #include "OurMap.hpp"
+#include "coreslam_internals.h"
+
 OurMap::OurMap( int size_pixels, int map_size_meters, int num_particles, bool init_pixels ):
   size_pixels(size_pixels), size_meters(map_size_meters), num_maps(num_particles),
   allocated_count(0){
@@ -63,6 +65,6 @@ OurMap::OurMap( int size_pixels, int map_size_meters, int num_particles, bool in
   }
     
 OurMap::~OurMap( ){
-    delete maps[];
+    delete maps;
   }
 
