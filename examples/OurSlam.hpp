@@ -22,14 +22,13 @@ class OurSlam: public CoreSLAM
 {
     std::vector<Particle> particles;
     OurMap map;
+    void * randomizer;
 
     protected:
         void updateMapAndPointcloud(PoseChange & poseChange);
     public:    
         OurSlam( Laser & laser, int map_size_pixels, double map_size_meters);
         ~OurSlam();
-        
-
    
 };
 

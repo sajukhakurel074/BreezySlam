@@ -13,18 +13,19 @@ Particle::Particle():x(0),y(0),theta(0),w(1),map_handle(-1){}
 OurSlam::OurSlam(Laser & laser, 
     int map_size_pixels, 
     double map_size_meters):CoreSLAM(laser, map_size_pixels, map_size_meters),
-    map(map_size_pixels, map_size_meters, 100, 1)
+    map(map_size_pixels, map_size_meters, 100, 1), randomizer(random_new(8))
     {
         for(int i=0;i<100;i++)
         {
             const Particle P(400, 400, 45, 1, map.new_map());
             particles.push_back(P);
         }
+        std::cout << "initial" << std::endl;
         for (int i = 0; i < 100; i++)
         {
             std::cout << particles[i].x << ' ';
             std::cout << particles[i].y << ' ';
-            std::cout << particles[i].theta << ' '<< endl;
+            std::cout << particles[i].theta << ' '<< std::endl;
         }    
     }
 
@@ -35,14 +36,24 @@ void OurSlam::updateMapAndPointcloud(PoseChange & poseChange)
 {
     void * randomizer = random_new(5);
     position_t position;
-    
     for(int i=0;i<100;i++)
     {
         position.x_mm = particles[i].x;
         position.y_mm = particles[i].y;
         position.theta_degrees = particles[i].theta;
 
-        position_t positions = rmhc_position_search(position, map_handler, scan, 15, 2, 1000, randomizer);
-    }
+        map_t Map = map.get_map_t(particles[i].map_handle); 
+        position_t positions = rmhc_position_search(position, &Map, scan_for_distance->scan, 15, 2, 1000, randomizer);
 
+        particles[i].x = positions.x_mm ;
+        particles[i].y = positions.y_mm; 
+        particles[i].theta = positions.theta_degrees; 
+    }
+    std::cout << "updated positions" << std::endl;
+    for (int i = 0; i < 100; i++)
+        {
+            std::cout << particles[i].x << ' ';
+            std::cout << particles[i].y << ' ';
+            std::cout << particles[i].theta << ' '<< std::endl;
+        }    
 }

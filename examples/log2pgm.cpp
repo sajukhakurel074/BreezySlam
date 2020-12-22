@@ -347,7 +347,8 @@ int main( int argc, const char** argv )
     LaserScan laser(0, 0); 
     OurSlam slam (laser, 800, 8);
 
-#if 0
+
+#if 1
     // Bozo filter for input args
     if (argc < 3)
     {
@@ -375,10 +376,10 @@ int main( int argc, const char** argv )
     unsigned char * mapbytes = new unsigned char[MAP_SIZE_PIXELS * MAP_SIZE_PIXELS];
         
     // Create SLAM object
-    LaserScan laser (0, 0);
-    SinglePositionSLAM * slam = random_seed ?
-    (SinglePositionSLAM*)new RMHC_SLAM(laser, MAP_SIZE_PIXELS, MAP_SIZE_METERS, random_seed) :
-    (SinglePositionSLAM*)new Deterministic_SLAM(laser, MAP_SIZE_PIXELS, MAP_SIZE_METERS);
+    //LaserScan laser (0, 0);
+    //SinglePositionSLAM * slam = random_seed ?
+    //(SinglePositionSLAM*)new RMHC_SLAM(laser, MAP_SIZE_PIXELS, MAP_SIZE_METERS, random_seed) :
+    //(SinglePositionSLAM*)new Deterministic_SLAM(laser, MAP_SIZE_PIXELS, MAP_SIZE_METERS);
 	    
     // Report what we're doing
     int nscans = scans.size();
@@ -393,7 +394,7 @@ int main( int argc, const char** argv )
     time_t start_sec = time(NULL);
 
     // Loop over scans
-    for (int scanno=0; scanno<nscans; ++scanno)
+    for (int scanno=0; scanno<5; ++scanno)
     {                         
         int * lidar = scans[scanno];
         
@@ -402,27 +403,27 @@ int main( int argc, const char** argv )
         {
             long * o = odometries[scanno];
             PoseChange poseChange = robot.computePoseChange(o[0], o[1], o[2]);
-            slam->update(lidar, poseChange);            
+            slam.update(lidar, poseChange);            
         }
         else
         {
-            slam->update(lidar);  
+            slam.update(lidar);  
         }
 
-        Position position = slam->getpos();
+        //Position position = slam.getpos();
 
         // Add new coordinates to trajectory
-        double * v = new double[2];
-        v[0] = position.x_mm;
-        v[1] = position.y_mm;
-        trajectory.push_back(v);     
+        //double * v = new double[2];
+        //v[0] = position.x_mm;
+        //v[1] = position.y_mm;
+        //trajectory.push_back(v);     
         
         // Tame impatience
         progbar->updateAmount(scanno);
         printf("\r%s", progbar->str());
         fflush(stdout);
         
-        #if CUMULATIVE_MAPS
+        #if 0
         char testfile[100];
         sprintf(testfile, "./testOut/test%d.pgm", scanno);
         printMap(slam, testfile, mapbytes, trajectory);
@@ -435,10 +436,10 @@ int main( int argc, const char** argv )
            nscans, elapsed_sec, (float)nscans/elapsed_sec);
               
     // Get final map
-    slam->getmap(mapbytes);
+    slam.getmap(mapbytes);
 
     // Put trajectory into map as black pixels
-    for (int k=0; k<(int)trajectory.size(); ++k)
+    /*for (int k=0; k<(int)trajectory.size(); ++k)
     {        
         double * v = trajectory[k];
                         
@@ -489,7 +490,7 @@ int main( int argc, const char** argv )
 
     delete progbar;
     delete mapbytes;
-    fclose(output);
+    fclose(output);*/
 
 #endif    
 
