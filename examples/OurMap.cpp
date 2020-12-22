@@ -68,3 +68,12 @@ OurMap::~OurMap( ){
     delete maps;
   }
 
+map_t OurMap::get_map_t( int map_handle ){
+    map_t map;
+    map.size_pixels = size_pixels;
+    map.size_meters = size_meters;
+    map.scale_pixels_per_mm = scale_pixels_per_mm;
+    map.pixels = maps + size_pixels * size_pixels * map_handle;
+    return map;
+}
+

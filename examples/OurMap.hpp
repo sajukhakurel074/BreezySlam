@@ -39,6 +39,8 @@ class OurMap {
   int new_map();
 
   int add_new_map( pixel_t *src );
+
+  map_t get_map_t( int map_handle );
     
 ~OurMap( );
 };
