@@ -16,4 +16,8 @@ python/build
 *.so
 *.swp
 *.pgm
+.clangd/
+compile_commands.json
+cpp/Documentation/
+.gdb_history
 
