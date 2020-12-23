@@ -345,7 +345,7 @@ int printMap(SinglePositionSLAM * slam, const char * filename, unsigned char * m
 int main( int argc, const char** argv )
 {    
     LaserScan laser(0, 0); 
-    OurSlam slam (laser, 800, 8);
+    OurSlam slam (laser, 800, 8, 10);
 
 
 #if 1
