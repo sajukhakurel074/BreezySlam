@@ -17,11 +17,11 @@ void Particle::Print_Particles()
 OurSlam::OurSlam(Laser & laser, 
     int map_size_pixels, 
     double map_size_meters, int number_of_particles):CoreSLAM(laser, map_size_pixels, map_size_meters),
-    map(map_size_pixels, map_size_meters, 100, 1), randomizer(random_new(8)), number_of_particles(number_of_particles)
+    map(map_size_pixels, map_size_meters, number_of_particles, 1), randomizer(random_new(8)), number_of_particles(number_of_particles)
     {
         for(int i=0;i<number_of_particles;i++)
         {
-            const Particle P(400, 400, 45, 1, map.new_map());
+            const Particle P(4000, 4000, 45, 1, map.new_map());
             particles.push_back(P);
         }
         std::cout << "initial" << std::endl;
@@ -80,6 +80,8 @@ void OurSlam::updateMapAndPointcloud(PoseChange & poseChange)
     std::cout << most_important_particle << std::endl;
     std::cout <<"Most Important Particle";
     most_important_point.Print_Particles();
+
+    map.printMap();
 }
 
 

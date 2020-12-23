@@ -31,6 +31,7 @@ class OurSlam: public CoreSLAM
         void updateMapAndPointcloud(PoseChange & poseChange);
     public:    
         OurSlam( Laser & laser, int map_size_pixels, double map_size_meters, int number_of_particles);
+        inline const std::vector<Particle>& getParticles(){return particles;};
         ~OurSlam();
    
 };

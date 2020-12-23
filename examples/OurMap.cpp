@@ -77,3 +77,36 @@ map_t OurMap::get_map_t( int map_handle ){
     return map;
 }
 
+
+int OurMap::coords2index(double x,  double y)
+{    
+    return y * size_pixels + x;
+}
+
+void OurMap::printMap(){
+  unsigned char * mapbytes = new unsigned char[size_pixels*size_pixels];
+  for(int i=0; i<num_maps; i++){
+    map_t map = get_map_t(i);
+    map_get(&map, (char*)mapbytes);
+
+    char filename[200];
+    sprintf(filename, "%s%d.pgm", "/home/rijalbasanta123/WorkSpace/ROS/minor/src/minor/src/output/maps/particle",i);
+    printf("\nSaving map to file %s\n", filename);
+
+    FILE * output = fopen(filename, "wt");
+
+    fprintf(output, "P2\n%d %d 255\n", size_pixels, size_pixels);
+
+    for (int y=0; y<size_pixels; y++)
+    {
+        for (int x=0; x<size_pixels; x++)
+        {
+            fprintf(output, "%d ", mapbytes[coords2index(x, y)]);
+        }
+        fprintf(output, "\n");
+    }
+    fclose(output);
+
+  }
+  delete mapbytes;
+}
