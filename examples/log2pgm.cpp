@@ -345,8 +345,7 @@ int printMap(SinglePositionSLAM * slam, const char * filename, unsigned char * m
 int main( int argc, const char** argv )
 {    
     LaserScan laser(0, 0); 
-    OurSlam slam (laser, 800, 8, 10);
-
+    OurSlam slam (laser, 800, 8, 20);
 
 #if 1
     // Bozo filter for input args
@@ -394,7 +393,7 @@ int main( int argc, const char** argv )
     time_t start_sec = time(NULL);
 
     // Loop over scans
-    for (int scanno=0; scanno<5; ++scanno)
+    for (int scanno=0; scanno<20; ++scanno)
     {                         
         int * lidar = scans[scanno];
         

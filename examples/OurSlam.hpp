@@ -23,6 +23,7 @@ class OurSlam: public CoreSLAM
 {
     std::vector<Particle> particles;
     OurMap map;
+    OurMap new_map;
     void * randomizer;
     int number_of_particles;
     Particle most_important_point;
@@ -33,7 +34,7 @@ class OurSlam: public CoreSLAM
         OurSlam( Laser & laser, int map_size_pixels, double map_size_meters, int number_of_particles);
         inline const std::vector<Particle>& getParticles(){return particles;};
         ~OurSlam();
-   
+    std::vector<Particle> Resampling();
 };
 
 

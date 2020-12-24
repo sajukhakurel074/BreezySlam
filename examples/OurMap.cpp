@@ -90,7 +90,7 @@ void OurMap::printMap(){
     map_get(&map, (char*)mapbytes);
 
     char filename[200];
-    sprintf(filename, "%s%d.pgm", "/home/rijalbasanta123/WorkSpace/ROS/minor/src/minor/src/output/maps/particle",i);
+    sprintf(filename, "%s%d.pgm", "/home/saju/BreezySlam/Output/MAP",i);
     printf("\nSaving map to file %s\n", filename);
 
     FILE * output = fopen(filename, "wt");
