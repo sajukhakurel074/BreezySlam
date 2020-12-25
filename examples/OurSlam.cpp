@@ -50,7 +50,7 @@ void OurSlam::updateMapAndPointcloud(PoseChange & poseChange)
         position.theta_degrees = particles[i].theta;
 
         map_t Map = map->get_map_t(particles[i].map_handle); 
-        position_t positions = rmhc_position_search(position, &Map, scan_for_distance->scan, 15, 2, 1000, randomizer);
+        position_t positions = rmhc_position_search(position, &Map, scan_for_distance->scan, 15, 45, 1000, randomizer);
 
         particles[i].x = positions.x_mm ;
         particles[i].y = positions.y_mm; 
@@ -86,8 +86,7 @@ void OurSlam::updateMapAndPointcloud(PoseChange & poseChange)
         std::cout <<"Most Important Particle ";
         most_important_point.Print_Particles();
     #endif
-    //map.printMap();
-    if(Sampling_count % 5 == 0)
+    if(Sampling_count % 10 == 0)
     {
         particles = Resampling();
         Sampling_count = 0;
@@ -99,7 +98,7 @@ std::vector<Particle> OurSlam:: Resampling()
     {
         OurMap * New_MAP = new OurMap(map_size_pixels, map_size_meters, number_of_particles, 1);
         std::vector<Particle> Resampled_Particles;
-        int i = 0S;
+        int i = 0;
         float r = static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/((1.0/particles.size())-0)));        
         float c = particles[i].w;
         for(int m=1;m<particles.size()+1;m++)
@@ -124,6 +123,9 @@ std::vector<Particle> OurSlam:: Resampling()
         return Resampled_Particles;
     }
 
+pixel_t* OurSlam::getBestMap(){
+    
+}
 
 
 

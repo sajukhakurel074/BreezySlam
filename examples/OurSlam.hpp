@@ -35,6 +35,8 @@ class OurSlam: public CoreSLAM
     public:    
         OurSlam( Laser & laser, int map_size_pixels, double map_size_meters, int number_of_particles);
         inline const std::vector<Particle>& getParticles(){return particles;};
+        pixel_t* getBestMap();
+        inline void printMap(){map->printMap();}
         ~OurSlam();
     std::vector<Particle> Resampling();
 };
