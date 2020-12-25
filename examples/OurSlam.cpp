@@ -63,19 +63,6 @@ void OurSlam::updateMapAndPointcloud(PoseChange & poseChange)
         particles[i].w = distance_scan_to_map(&Map, scan_for_distance->scan, positions) * particles[i].w;
         sum += particles[i].w;
     }
-
-    for (int i = 0; i < particles.size(); i++)
-    {
-        particles[i].w = particles[i].w / sum;
-    }
-    for (int i = 0; i < particles.size(); i++)
-    {
-        if(particles[i].w > most_important_particle)
-        {
-            most_important_particle = particles[i].w;
-            most_important_point = Particle(particles[i].x, particles[i].y, particles[i].theta, particles[i].w, particles[i].map_handle);
-        } 
-    }
     #if PRINT
         std::cout << "updated positions" << std::endl;
         for (int i = 0; i < number_of_particles; i++)
@@ -86,12 +73,27 @@ void OurSlam::updateMapAndPointcloud(PoseChange & poseChange)
         std::cout <<"Most Important Particle ";
         most_important_point.Print_Particles();
     #endif
+    for (int i = 0; i < particles.size(); i++)
+    {
+        particles[i].w = particles[i].w / sum;
+    }
+
     if(Sampling_count % 10 == 0)
     {
         particles = Resampling();
         Sampling_count = 0;
     }
+    
     Sampling_count++;
+
+    for (int i = 0; i < particles.size(); i++)
+    {
+        if(particles[i].w > most_important_particle)
+        {
+            most_important_particle = particles[i].w;
+            most_important_point = Particle(particles[i].x, particles[i].y, particles[i].theta, particles[i].w, particles[i].map_handle);
+        } 
+    }
 }
 
 std::vector<Particle> OurSlam:: Resampling()
