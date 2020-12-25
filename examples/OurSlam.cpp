@@ -83,7 +83,7 @@ void OurSlam::updateMapAndPointcloud(PoseChange & poseChange)
         particles = Resampling();
         Sampling_count = 0;
     }
-    
+
     Sampling_count++;
 
     for (int i = 0; i < particles.size(); i++)
@@ -125,8 +125,9 @@ std::vector<Particle> OurSlam:: Resampling()
         return Resampled_Particles;
     }
 
-pixel_t* OurSlam::getBestMap(){
-    
+pixel_t* OurSlam::getBestMap()
+{
+    return map->get_particle_map(most_important_point.map_handle);   
 }
 
 
