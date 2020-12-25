@@ -22,9 +22,11 @@ class Particle
 class OurSlam: public CoreSLAM
 {
     std::vector<Particle> particles;
-    OurMap map;
-    OurMap new_map;
+    OurMap *map;
+    int Sampling_count;
     void * randomizer;
+    int map_size_pixels; 
+    int map_size_meters;
     int number_of_particles;
     Particle most_important_point;
 
