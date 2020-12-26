@@ -21,8 +21,8 @@ along with this code.  If not, see <http:#www.gnu.org/licenses/>.
 
 /* Default parameters --------------------------------------------------------*/
 
-static const int    DEFAULT_MAP_QUALITY         = 50; /* out of 255 */
-static const double DEFAULT_HOLE_WIDTH_MM       = 600;
+static const int    DEFAULT_MAP_QUALITY         = 25; //50; /* out of 255 */
+static const double DEFAULT_HOLE_WIDTH_MM       = 200;
 
 static const double DEFAULT_SIGMA_XY_MM         = 100;
 static const double DEFAULT_SIGMA_THETA_DEGREES = 20;
